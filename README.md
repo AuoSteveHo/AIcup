@@ -1,6 +1,8 @@
 # AIcup 跨相機多目標車輛追蹤競賽-參數組 - Team 4997 程式碼上傳
 **開發環境為python 3.8 其他依循官方教學**
-**google drive連結： https://drive.google.com/drive/folders/1S0d1Ha01reJCOBupABaYDo3hjgMQRqg5?usp=drive_link
+
+google drive連結： https://drive.google.com/drive/folders/1S0d1Ha01reJCOBupABaYDo3hjgMQRqg5?usp=drive_link
+
 ## 安裝
 ```shell
 conda create -n AIcup python=3.8
