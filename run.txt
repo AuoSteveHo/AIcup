@@ -1,0 +1,130 @@
+---------------------------------------------------------Prepare---------------------------------------------------------
+
+python fast_reid/datasets/generate_AICUP_patches.py --data_path 32_33_train_v2/train
+
+python yolov7/tools/AICUP_to_YOLOv7.py --AICUP_dir 32_33_train_v2/train --YOLOv7_dir datasets/AI_CUP_MCMOT_dataset/yolo
+
+---------------------------------------------------------Train---------------------------------------------------------
+
+python fast_reid/tools/train_net.py --config-file fast_reid/configs/AICUP/bagtricks_R50-ibn.yml MODEL.DEVICE "cuda:0"
+
+python yolov7/train.py --device 0 --batch-size 8 --epochs 50 --workers 2 --data yolov7/data/AICUP.yaml --img 640 640 --cfg yolov7/cfg/training/yolov7-AICUP.yaml --weights 'pretrained/yolov7-e6e.pt' --name yolov7-AICUP --hyp data/hyp.scratch.custom.yaml --save_period 1
+
+python yolov7/train_aux.py --device 0 --batch-size 8 --epochs 50 --workers 2 --data yolov7/data/AICUP.yaml --img 640 640 --cfg yolov7/cfg/training/yolov7-w6-AICUP.yaml --weights 'pretrained/yolov7-e6e.pt' --name yolov7-w6-AICUP --hyp data/hyp.scratch.custom.yaml --save_period 1
+
+---------------------------------------------------------Test---------------------------------------------------------
+
+python tools/mc_demo_yolov7.py --weights runs/train/yolov7-AICUP/weights/best.pt --source 32_33_train_v2/train/images/0924_150000_151900 --device 1 --name 0924_150000_151900 --fuse-score --agnostic-nms --with-reid --fast-reid-config fast_reid/configs/AICUP/bagtricks_R50-ibn.yml --fast-reid-weights logs/AICUP_115/bagtricks_R50-ibn/model_0058.pth
+
+track_all_timestamps.sh --weights runs/train/yolov7-AICUP/weights/best.pt --source-dir 32_33_train_v2/train/images --device 1 --fast-reid-config fast_reid/configs/AICUP/bagtricks_R50-ibn.yml --fast-reid-weights logs/AICUP_115/bagtricks_R50-ibn/model_0058.pth
+
+track_all_timestamps.sh --weights runs/train/yolov7-w6-AICUP/weights/best.pt --source-dir 32_33_train_v2/train/images --device 1 --fast-reid-config fast_reid/configs/AICUP/bagtricks_R50-ibn.yml --fast-reid-weights logs/AICUP_115/bagtricks_R50-ibn/model_0058.pth
+
+---------------------------------------------------------Evaluate---------------------------------------------------------
+
+python tools/datasets/AICUP_to_MOT15.py --AICUP_dir 32_33_train_v2/ --MOT15_dir  MOT15_dir/
+
+python tools/evaluate.py --gt_dir MOT15_dir/ --ts_dir runs/detect/yolov7-AICUP/detect_result/
+
+python tools/evaluate.py --gt_dir MOT15_dir/ --ts_dir runs/detect/yolov7-w6-AICUP/detect_result/
+
+python tools/evaluate.py --gt_dir 1/ --ts_dir 2/
+
+---------------------------------------------------------Augmentation---------------------------------------------------------
+
+python fast_reid/datasets/generate_AICUP_patches.py --data_path 32_33_train_v2/augmentation
+
+python yolov7/tools/AICUP_to_YOLOv7.py --AICUP_dir 32_33_train_v2/augmentation --YOLOv7_dir datasets/AI_CUP_MCMOT_dataset/yolo_augmentation
+
+python fast_reid/tools/train_net.py --config-file fast_reid/configs/AICUP/bagtricks_R50-ibn.yml MODEL.DEVICE "cuda:0"
+
+python yolov7/train.py --device 0 --batch-size 8 --epochs 50 --workers 2 --data yolov7/data/AICUP_augmentation.yaml --img 640 640 --cfg yolov7/cfg/training/yolov7-AICUP.yaml --weights 'pretrained/yolov7-e6e.pt' --name yolov7-AICUP-augmentation --hyp yolov7/data/hyp.scratch.p5.yaml --save_period 1
+
+track_all_timestamps.sh --weights runs/train/yolov7-AICUP-augmentation/weights/best.pt --source-dir 32_33_train_v2/train/images --device 1 --fast-reid-config fast_reid/configs/AICUP/bagtricks_R50-ibn.yml --fast-reid-weights logs/AICUP_115/bagtricks_R50-ibn/model_0058.pth
+
+python tools/evaluate.py --gt_dir MOT15_dir/ --ts_dir runs/detect/yolov7-AICUP-augmentation/detect_result/
+
+python tools/evaluate.py --gt_dir MOT15_dir/ --ts_dir runs/detect/yolov7-AICUP-augmentation3/
+
+---------------------------------------------------------FINAL TEST---------------------------------------------------------
+
+track_all_timestamps.sh --weights runs/train/yolov7-AICUP-augmentation/weights/best.pt --source-dir 32_33_AI_CUP_testdataset/AI_CUP_testdata/images --device 1 --fast-reid-config fast_reid/configs/AICUP/bagtricks_R50-ibn.yml --fast-reid-weights logs/AICUP_115/bagtricks_R50-ibn/model_0058.pth
+
+track_all_timestamps.sh --weights runs/train/yolov7-AICUP-augmentation/weights/last.pt --source-dir 32_33_AI_CUP_testdataset/AI_CUP_testdata/images --device 1 --fast-reid-config fast_reid/configs/AICUP/bagtricks_R50-ibn.yml --fast-reid-weights logs/AICUP_115/bagtricks_R50-ibn/model_0058.pth
+
+---------------------------------------------------------Adjustment---------------------------------------------------------
+
+track_all_timestamps.sh --weights runs/train/yolov7-AICUP-augmentation/weights/best.pt --source-dir test --device 1 --fast-reid-config fast_reid/configs/AICUP/bagtricks_R50-ibn.yml --fast-reid-weights logs/AICUP_115/bagtricks_R50-ibn/model_0058.pth
+track_all_timestamps.sh --weights runs/train/yolov7-AICUP-augmentation/weights/last.pt --source-dir test --device 1 --fast-reid-config fast_reid/configs/AICUP/bagtricks_R50-ibn.yml --fast-reid-weights logs/AICUP_115/bagtricks_R50-ibn/model_0058.pth
+python tools/evaluate.py --gt_dir test2/ --ts_dir runs/detect/0903_150000_151900/
+
+IDF1	MOTA
+-------best.pt---------
+Base(no change)
+74.2%   65.1% 
+-----------------------
+conf-thres 0.05 *good*
+74.3%   65.2%
+conf-thres 0.01
+74.3%   65.2%
+track_buffer 120
+73.0%   64.7%
+track_buffer 10
+74.0%   65.2%
+track_high_thresh  0.1 
+74.2%   65.1%
+track_high_thresh  0.4
+73.3%   63.7%
+track_high_thresh 0.28
+74.1%   65.1%
+track_high_thresh 0.32
+74.2%   64.9%
+with-reid  True
+74.3%   65.2%
+proximity_thresh 0.6
+74.3%   65.2%
+proximity_thresh 0.4
+74.3%   65.2%
+appearance_thresh 0.15
+64.1%   59.1%
+appearance_thresh 0.35
+61.2%   63.8%
+appearance_thresh 0.28 *good*
+74.3%   66.3%
+appearance_thresh 0.3
+72.2%   65.2%
+appearance_thresh 0.29
+73.2%   66.1%
+appearance_thresh 0.27
+74.2%   65.5%
+
+IDF1	MOTA
+-------last.pt---------
+Base(no change)
+74.1%   66.1%
+-----------------------
+conf-thres 0.05
+74.1%   66.1%
+appearance_thresh 0.29 *good*
+73.7%   68.0%
+appearance_thresh 0.3
+72.8%   67.6%
+appearance_thresh 0.27 *good*
+75.1%   67.5%
+appearance_thresh 0.26 *good*
+75.3%   67.9%
+appearance_thresh 0.25
+74.8%   67.3%
+appearance_thresh 0.24
+74.7%   67.2%
+proximity_thresh 0.3
+75.3%   67.9%
+proximity_thresh 0.7
+75.3%   67.9%
+
+---------------------------------------------------------Upload---------------------------------------------------------
+1. 32_33_submission_sample.zip TEST
+2. 20240528_team4997_1.zip / best.pt
+3. 20240528_team4997_2.zip / best.pt, conf-thres 0.05, appearance_thresh 0.28
+4. 20240528_team4997_3.zip / last.pt
+5. 20240528_team4997_4.zip / last.pt, conf-thres 0.05, appearance_thresh 0.26
