@@ -195,3 +195,9 @@ track_all_timestamps.sh --weights runs/train/yolov7-AICUP-augmentation/weights/b
 track_all_timestamps.sh --weights runs/train/yolov7-AICUP-augmentation/weights/last.pt --source-dir test --device 1 --fast-reid-config fast_reid/configs/AICUP/bagtricks_R50-ibn.yml --fast-reid-weights logs/AICUP_115/bagtricks_R50-ibn/model_0058.pth
 python tools/evaluate.py --gt_dir test2/ --ts_dir runs/detect/0903_150000_151900/
 ```
+## 結果上傳
+1. 32_33_submission_sample.zip TEST
+2. 20240528_team4997_1.zip / best.pt
+3. 20240528_team4997_2.zip / best.pt, conf-thres 0.05, appearance_thresh 0.28
+4. 20240528_team4997_3.zip / last.pt
+5. 20240528_team4997_4.zip / last.pt, conf-thres 0.05, appearance_thresh 0.26
