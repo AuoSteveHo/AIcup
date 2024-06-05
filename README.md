@@ -1,10 +1,8 @@
 # AIcup 跨相機多目標車輛追蹤競賽-參數組 - Team 4997 程式碼上傳
+**開發環境 python 3.8**
+**依循官方教學**
 
-##安裝
-
-** 開發環境 python 3.8 ** 
-** 依循官方教學 ** 
-
+##安裝##
 **1.** 
 ```shell
 conda create -n botsort python=3.8
