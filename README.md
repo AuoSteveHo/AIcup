@@ -3,7 +3,8 @@
 
 google drive連結： https://drive.google.com/drive/folders/1S0d1Ha01reJCOBupABaYDo3hjgMQRqg5?usp=drive_link
 ## 模型
-['last.pt'](https://github.com/AuoSteveHo/AIcup/releases/download/untagged-66decab18a1dfdedb6ab/last.pt)
+[model_058.pth](https://github.com/AuoSteveHo/AIcup/releases/download/untagged-d6594f5d82b2a28cdb30/model_0058.pth)
+[last.pt](https://github.com/AuoSteveHo/AIcup/releases/download/untagged-66decab18a1dfdedb6ab/last.pt)
 
 ## 安裝
 ```shell
