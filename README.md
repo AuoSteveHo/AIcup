@@ -166,8 +166,6 @@ python tools/datasets/AICUP_to_MOT15.py --AICUP_dir 32_33_train_v2/ --MOT15_dir 
 python tools/evaluate.py --gt_dir MOT15_dir/ --ts_dir runs/detect/yolov7-AICUP/detect_result/
 
 python tools/evaluate.py --gt_dir MOT15_dir/ --ts_dir runs/detect/yolov7-w6-AICUP/detect_result/
-
-python tools/evaluate.py --gt_dir 1/ --ts_dir 2/
 ```
 ## 影像增量
 ```shell
@@ -184,8 +182,6 @@ python yolov7/train.py --device 0 --batch-size 8 --epochs 50 --workers 2 --data 
 track_all_timestamps.sh --weights runs/train/yolov7-AICUP-augmentation/weights/best.pt --source-dir 32_33_train_v2/train/images --device 1 --fast-reid-config fast_reid/configs/AICUP/bagtricks_R50-ibn.yml --fast-reid-weights logs/AICUP_115/bagtricks_R50-ibn/model_0058.pth
 
 python tools/evaluate.py --gt_dir MOT15_dir/ --ts_dir runs/detect/yolov7-AICUP-augmentation/detect_result/
-
-python tools/evaluate.py --gt_dir MOT15_dir/ --ts_dir runs/detect/yolov7-AICUP-augmentation3/
 ```
 ## 最終測試
 ```shell
