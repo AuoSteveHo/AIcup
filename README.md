@@ -2,6 +2,8 @@
 **開發環境為python 3.8 其他依循官方教學**
 
 google drive連結： https://drive.google.com/drive/folders/1S0d1Ha01reJCOBupABaYDo3hjgMQRqg5?usp=drive_link
+## 模型
+['last.pt'](https://github.com/AuoSteveHo/AIcup/releases/download/untagged-66decab18a1dfdedb6ab/last.pt)
 
 ## 安裝
 ```shell
