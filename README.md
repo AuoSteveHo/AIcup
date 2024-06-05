@@ -196,8 +196,8 @@ track_all_timestamps.sh --weights runs/train/yolov7-AICUP-augmentation/weights/l
 python tools/evaluate.py --gt_dir test2/ --ts_dir runs/detect/0903_150000_151900/
 ```
 ## 結果上傳
-1. 32_33_submission_sample.zip / TEST $\rightarrow$ Public Score: 0.466868
-2. 20240528_team4997_1.zip / best.pt $\rightarrow$ Public Score: 0.789098
-3. 20240528_team4997_2.zip / best.pt, conf-thres 0.05, appearance_thresh 0.28 $\rightarrow$ Public Score: 0.810234
-4. 20240528_team4997_3.zip / last.pt $\rightarrow$ Public Score: 0.834429
-5. 20240528_team4997_4.zip / last.pt, conf-thres 0.05, appearance_thresh 0.26 $\rightarrow$ Public Score: 0.818805
+1. 32_33_submission_sample.zip / TEST $\Longrightarrow$ Public Score: 0.466868
+2. 20240528_team4997_1.zip / best.pt $\Longrightarrow$ Public Score: 0.789098
+3. 20240528_team4997_2.zip / best.pt, conf-thres 0.05, appearance_thresh 0.28 $\Longrightarrow$ Public Score: 0.810234
+4. 20240528_team4997_3.zip / last.pt $\Longrightarrow$ Public Score: 0.834429
+5. 20240528_team4997_4.zip / last.pt, conf-thres 0.05, appearance_thresh 0.26 $\Longrightarrow$ Public Score: 0.818805
