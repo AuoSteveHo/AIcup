@@ -3,8 +3,8 @@
 
 ## 安裝
 ```shell
-conda create -n botsort python=3.8
-conda activate botsort
+conda create -n AIcup python=3.8
+conda activate AIcup
 ```
 
 ```shell
